@@ -116,7 +116,7 @@
      background: rgba(255, 255, 255, 0.3);
    }
    
-   .site-layout-background {
+   .site-layout .site-layout-background {
      background: #fff;
    }
    ```

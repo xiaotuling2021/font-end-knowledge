@@ -108,3 +108,101 @@ function createBookList(info) {
 }
 ```
 
+### react hooks关于react redux的应用
+
+安装@reduxjs/toolkit和react-redux
+
+```
+npm install @reduxjs/toolkit react-redux
+```
+
+创建仓库
+
+```
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from '../pages/CounterSlice'
+
+export default configureStore({
+  reducer: {
+    counter: counterReducer
+  },
+})
+```
+
+main.js中引用
+
+```
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './pages/App'
+import { Provider } from 'react-redux';
+import store from './store'; 
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>
+)
+```
+
+reducer.js
+
+```
+import { createSlice } from '@reduxjs/toolkit';
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0,
+  },
+  reducers: {
+    increment: (state) => {
+      state.value += 1 
+    },
+    decrement: (state) => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload;
+    }
+  }
+});
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+
+export default counterSlice.reducer;
+```
+
+组件
+
+```
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from '../CounterSlice';
+
+const Counter = () => {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div>
+        <div>
+          <button onClick={() => dispatch(increment())}>
+            +
+          </button>
+        </div>
+        <div>{count}</div>
+        <div>
+          <button onClick={() => dispatch(decrement())}>
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+export default Counter;
+```
+
