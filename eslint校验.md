@@ -4,7 +4,7 @@
 
 ```
 npm i -D eslint
-npx eslint -init
+npx eslint --init
 ```
 
 2. 创建修改.eslintrc文件
